@@ -13,13 +13,13 @@ connectDB();
 
 app.use(express.json())
 
-// app.use(cors());
+app.use(cors());
 
-app.use(cors({
-    origin: 'http://localhost:5173', // Allow requests from this origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed methods
-    credentials: true, // Include credentials like cookies in requests
-}));
+// app.use(cors({
+//     origin: 'http://localhost:5173', // Allow requests from this origin
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed methods
+//     credentials: true, // Include credentials like cookies in requests
+// }));
 
 // app.set('view engine', "ejs");
 
