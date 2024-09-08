@@ -1,76 +1,7 @@
 import userModel from '../Models/User.js';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
-// import bcrypt from 'bcryptjs';
 import auth from '../common/auth.js';
-
-// export const register = async (req, res) => {
-//   const { firstName, lastName, email, password } = req.body;
-//   try {
-//     const user = new User({ firstName, lastName, email, password });
-//     await user.save();
-    
-//     // Send activation email with JWT token
-//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-//     const url = `${process.env.BASE_URL}/activate/${token}`;
-    
-//     // Send email logic
-//     const transporter = nodemailer.createTransport(
-//       {
-//       service:"gmail",
-//       auth:{
-//           user:process.env.EMAIL_ID,
-//           pass:process.env.SECRET_KEY,
-
-//       }});
-//     await transporter.sendMail({
-//       from: process.env.EMAIL_ID,
-//       to: user.email,
-//       subject: 'Account Activation',
-//       html: `<a href="${url}">Click to activate your account</a>`,
-//     });
-    
-//     res.status(201).json({ message: 'Registration successful. Please check your email to activate your account.' });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-// export const register = async (req, res) => {
-//   const { firstName, lastName, email, password } = req.body;
-//   try {
-//     const user = new User({ firstName, lastName, email, password });
-//     await user.save();
-    
-//     // Generate JWT token for email activation
-//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-//     const url = `${process.env.BASE_URL}/activate/${token}`;
-    
-//     // Send activation email with the token
-//     const transporter = nodemailer.createTransport({
-//       service: "gmail",
-//       auth: {
-//         user: process.env.EMAIL_ID,
-//         pass: process.env.SECRET_KEY,
-//       },
-//     });
-
-//     await transporter.sendMail({
-//       from: process.env.EMAIL_ID,
-//       to: user.email,
-//       subject: 'Account Activation',
-//       html: `<a href="${url}">Click to activate your account</a>`,
-//     });
-    
-//     // Send both message and token in the response
-//     res.status(201).json({
-//       message: 'Registration successful. Please check your email to activate your account.',
-//       token,  // Send the token in the response
-//     });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
 
 export const signup = async(req,res)=>{
   try {
@@ -98,48 +29,6 @@ export const signup = async(req,res)=>{
       })
   }
 }
-
-// export const activateAccount = async (req, res) => {
-//   const { token } = req.params;
-//   try {
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//     const user = await User.findByIdAndUpdate(decoded.id, { isActive: true });
-//     if (!user) throw new Error('User not found');
-//     res.status(200).json({ message: 'Account activated successfully' });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-// Additional controllers for login, forgot password, reset password, etc.
-// export const login = async (req, res) => {
-//   const { email, password } = req.body;
-//   try {
-//     // Check if the user exists
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.status(400).json({ error: 'Invalid email or password' });
-//     }
-
-//     // Check if the account is activated
-//     if (!user.isActive) {
-//       return res.status(400).json({ error: 'Please activate your account first' });
-//     }
-
-//     // Compare password
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) {
-//       return res.status(400).json({ error: 'Invalid email or password' });
-//     }
-
-//     // Generate JWT token
-//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-
-//     res.status(200).json({ token, message: 'Login successful' });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
 
 export const login = async(req,res)=>{
   try {
@@ -179,21 +68,6 @@ export const login = async(req,res)=>{
   }
 }
 
-// export const getAllUser = async(req,res)=>{
-//   try {
-//      const allusers = await User.find({},{password:0,_id:0})
-//      res.status(200).send({
-//       message:"users Fetched Successfully",
-//       allusers
-//      })
-//   } catch (error) {
-//       res.status(500).send({
-//           message:"Internal Server Error",
-//           error:error.message
-//       })
-//   }
-// }
-
 export const getAllUser = async(req,res)=>{
   try {
      const allusers = await userModel.find({},{password:0,_id:0})
@@ -208,33 +82,6 @@ export const getAllUser = async(req,res)=>{
       })
   }
 }
-
-// export const forgotPassword = async (req, res) => {
-//   const { email } = req.body;
-//   try {
-//     // Check if the user exists
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.status(400).json({ error: 'User with this email does not exist' });
-//     }
-
-//     // Generate a password reset token
-//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-//     const url = `${process.env.BASE_URL}/reset-password/${token}`;
-
-//     // Send email with the reset password link
-//     const transporter = nodemailer.createTransport({/* Email Config */});
-//     await transporter.sendMail({
-//       to: email,
-//       subject: 'Password Reset',
-//       html: `<a href="${url}">Click to reset your password</a>`,
-//     });
-
-//     res.status(200).json({ message: 'Password reset link sent to your email' });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
 
 export const forgetPassword = async (req, res) => {
   try {
@@ -285,25 +132,6 @@ export const forgetPassword = async (req, res) => {
   }
 };
 
-// export const resetPassword = async (req, res) => {
-//   const { token } = req.params;
-//   const { newPassword } = req.body;
-//   try {
-//     // Verify the token
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-//     // Hash the new password
-//     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-//     // Update the user's password
-//     const user = await User.findByIdAndUpdate(decoded.id, { password: hashedPassword });
-//     if (!user) throw new Error('User not found');
-
-//     res.status(200).json({ message: 'Password reset successful' });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
 
 export const resetPassword = async (req, res) => {
   try {
