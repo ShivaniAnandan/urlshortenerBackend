@@ -260,7 +260,7 @@ export const forgetPassword = async (req, res) => {
               to: user.email,
               subject: "Password Reset Link",
               html: `
-                  <p> Dear ${user.userName}, </p>
+                  <p> Dear ${user.firstName}, </p>
                   <p> Sorry to hear you’re having trouble logging into your account. We got a message that you forgot your password. If this was you, you can get right back into your account or reset your password now. </p>
                   <p> Click the following link to reset your password: <a href="${resetLink}">${resetLink}</a> </p>
                   <p> If you didn’t request a login link or a password reset, you can ignore this message. </p>
